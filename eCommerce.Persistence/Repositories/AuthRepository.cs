@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using eCommerce.Entities;
 using eCommerce.Persistence.Interfaces;
 using Oracle.ManagedDataAccess.Client;
@@ -21,6 +17,7 @@ namespace eCommerce.Persistence
         }
         public async Task<User> Register(User user)
         {
+            User? userFinded = null; 
             var passwordHash = EncryptPassword(user.Password);
             user.Password = passwordHash;
             using (OracleCommand command = new OracleCommand("usuario_insertar", _connection))
@@ -32,12 +29,26 @@ namespace eCommerce.Persistence
                 command.Parameters.Add("p_name", OracleDbType.Varchar2).Value = user.Name;
                 command.Parameters.Add("p_rol", OracleDbType.Varchar2).Value = user.Rol;
                 command.Parameters.Add("p_password", OracleDbType.Varchar2).Value = user.Password;
+                command.Parameters.Add("usuario", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
 
                 await _connection.OpenAsync();
-                command.ExecuteNonQuery();
+                using (OracleDataReader reader = command.ExecuteReader())
+                {
+                    if(reader.HasRows){
+                        reader.Read();
+                        userFinded = new User{
+                            UserId = reader.GetInt32("idUsuario"),
+                            Mail = reader.GetString("mail"),
+                            Name = reader.GetString("nombre"),
+                            Rol = reader.GetString("rol"),
+                            Password = reader.GetString("contraseña")  
+                        };
+                    }
+                }
                 await _connection.CloseAsync();
             }
-            return user;
+            if(userFinded is null) return null;
+            return userFinded;
         }     
         public async Task<User> Login(string email, string password)
         {
@@ -50,7 +61,7 @@ namespace eCommerce.Persistence
 
         public async Task<User> GetUserByMail(string mail)
         {
-            User userFinded = null;
+            User? userFinded = null;
             using (OracleCommand command = new OracleCommand("usuario_buscar", _connection))
             {
                 await _connection.OpenAsync();

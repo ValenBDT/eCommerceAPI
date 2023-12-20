@@ -11,5 +11,6 @@ namespace eCommerce.DTOs.User
         public string Mail { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public string Rol { get; set; } = string.Empty;
+        public string Token { get; set; } = string.Empty;
     }
 }
