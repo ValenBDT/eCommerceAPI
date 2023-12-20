@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using eCommerce.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eCommerce.WebAPI.Controllers
-{
+{   
+    [Authorize(Policy = "Comprador")]
     [ApiController]
     [Route("api/[controller]")]
     public class UserController : ControllerBase
