@@ -31,3 +31,46 @@
 *.db
 .vs/
 Publish/
+
+# Carpeta bin y obj generada por compilación
+bin/
+obj/
+
+# Carpetas específicas de Visual Studio
+.vscode/
+.vs/
+
+# Carpeta de usuario ASP.NET
+wwwroot/
+
+# Carpeta donde se almacenan los paquetes NuGet
+*.nuget/
+
+# Archivos de configuración de usuario de Visual Studio
+*.suo
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
+# Carpetas y archivos específicos de .NET
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Carpetas de prueba
+TestResults/
+
+# Archivo de configuración para herramientas
+*.swp
+*.swn
+*.bak
+
+# Carpeta de migraciones de Entity Framework
+Database/
+
+# Carpeta de migraciones de ASP.NET Core Identity
+Data/
+
+# Carpetas y archivos de logs
+*.log

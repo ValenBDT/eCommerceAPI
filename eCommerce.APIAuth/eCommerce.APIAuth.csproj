@@ -8,14 +8,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
     <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="3.21.120" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\eCommerce.DTOs\eCommerce.DTOs.csproj" />
+    <ProjectReference Include="..\eCommerce.Entities\eCommerce.Entities.csproj" />
     <ProjectReference Include="..\eCommerce.Persistence\eCommerce.Persistence.csproj" />
-    <ProjectReference Include="..\eCommerce.Services\eCommerce.Services.csproj" />
   </ItemGroup>
 
 </Project>
