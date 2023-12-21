@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace eCommerce.Entities
+namespace eCommerce.DTOs.Product
 {
-    public class SalesStock
+    public class ProductToCreateDTO
     {
-        public int Idvendedor {get; set; }
         public string Code { get; set; } = String.Empty;
         public string Name { get; set; } = String.Empty;
         public int Quantity { get; set; }
         public double Price { get ;set; }
-
     }
 }

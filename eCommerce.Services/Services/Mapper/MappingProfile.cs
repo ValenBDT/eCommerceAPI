@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using eCommerce.DTOs.Product;
 using eCommerce.DTOs.User;
 using eCommerce.Entities;
 
@@ -14,7 +15,12 @@ namespace eCommerce.Services.Services.Mapper
         {
             CreateMap<userToLoginDTO, User>();
             CreateMap<userToRegisterDTO, User>();
-            CreateMap<User, userToListDTO>();
+            CreateMap<User, userToListRegisterDTO>();
+            CreateMap<User, userToListLoginDTO>();
+
+            CreateMap<ProductToCreateDTO, SalesStock>();
+            //CreateMap<productToUpdateDTO, SalesStock>();
+            CreateMap<SalesStock, ProductToListDTO>();
         }
     }
 }

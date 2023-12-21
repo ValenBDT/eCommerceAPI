@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace eCommerce.DTOs.User
 {
-    public class userToListDTO
+    public class userToListLoginDTO
     {
         public int UserId { get; set; }
         public string Mail { get; set; } = string.Empty;

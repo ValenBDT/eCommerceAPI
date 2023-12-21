@@ -9,8 +9,8 @@ namespace eCommerce.Services.Interfaces
 {
     public interface IAuthService
     {
-        Task<userToListDTO> Register(userToRegisterDTO userToRegisterDTO);
-        Task<userToListDTO> Login(userToLoginDTO userToLoginDTO);
+        Task<userToListRegisterDTO> Register(userToRegisterDTO userToRegisterDTO);
+        Task<userToListLoginDTO> Login(userToLoginDTO userToLoginDTO);
 
     }
 }
