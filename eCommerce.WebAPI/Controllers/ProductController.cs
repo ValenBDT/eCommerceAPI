@@ -27,13 +27,26 @@ namespace eCommerce.WebAPI.Controllers
                 if(idvendedorClaim is null) return Unauthorized();
 
                 var idVendedor = int.Parse(idvendedorClaim.Value);
-                var productCreated = await _productService.CreateProduct(productToCreateDTO, idVendedor);
+                var productCreated = await _productService.CreateProductAsync(productToCreateDTO, idVendedor);
                 if(productCreated is null) return  NotFound();
 
                 return Ok(productCreated);
 
             }
             catch (System.Exception){
+                return StatusCode(500, "Se produjo un error en la base de datos. Inténtelo de nuevo más tarde.");
+            }
+        }
+        [Authorize(Policy = "Vendedor")]
+        [HttpDelete]
+        public async Task<IActionResult> DeleteProduct(string code){
+            try{
+                if(!await _productService.DeleteProductAsync(code)) return BadRequest();
+
+                return Ok("Registro borrado exitosamente");
+            }
+            catch (System.Exception){
+                
                 return StatusCode(500, "Se produjo un error en la base de datos. Inténtelo de nuevo más tarde.");
             }
         }

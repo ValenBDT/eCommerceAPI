@@ -21,11 +21,14 @@ namespace eCommerce.Services.Services
             _productRepository = productRepository;
         }
 
-        public async Task<ProductToListDTO> CreateProduct(ProductToCreateDTO productToCreateDTO, int Idvendedor)
+        public async Task<ProductToListDTO> CreateProductAsync(ProductToCreateDTO productToCreateDTO, int Idvendedor)
         {
+
+            if(await _productRepository.GetProductByCodeAsync(productToCreateDTO.Code) is not null) return null;
+
             var productToCreate = _mapper.Map<SalesStock>(productToCreateDTO);
             productToCreate.Idvendedor = Idvendedor;
-            var productCreated = await _productRepository.CreateProduct(productToCreate);
+            var productCreated = await _productRepository.CreateProductAsync(productToCreate);
 
             if(productCreated is null) return null;
 
@@ -33,6 +36,13 @@ namespace eCommerce.Services.Services
 
             return productCreatedDTO;
 
+        }
+
+        public async Task<bool> DeleteProductAsync(string code){
+            if(!await _productRepository.ExistProductAsync(code)) return false;
+
+            await _productRepository.DeleteProductAsync(code);
+            return true;
         }
 
 

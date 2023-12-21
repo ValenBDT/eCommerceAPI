@@ -8,6 +8,7 @@ namespace eCommerce.Services.Interfaces
 {
     public interface IProductService
     {
-        Task<ProductToListDTO> CreateProduct(ProductToCreateDTO productToCreateDTO, int Idvendedor);
+        Task<ProductToListDTO> CreateProductAsync(ProductToCreateDTO productToCreateDTO, int Idvendedor);
+        Task<bool> DeleteProductAsync(string code);
     }
 }

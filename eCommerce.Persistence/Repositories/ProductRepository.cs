@@ -16,9 +16,9 @@ namespace eCommerce.Persistence.Repositories
         {
             _connection = connection;
         }
-        public async Task<SalesStock> CreateProduct(SalesStock productoStock)
+        public async Task<SalesStock> CreateProductAsync(SalesStock productoStock)
         {
-            SalesStock productStockFinded = null;
+            SalesStock? productStockFinded = null;
             using (OracleCommand command = new OracleCommand("stockVentas_insertar", _connection)){
                 command.CommandType = CommandType.StoredProcedure;
                 
@@ -47,6 +47,70 @@ namespace eCommerce.Persistence.Repositories
 
                 return productStockFinded;
 
+            }
+        }
+
+        public async Task DeleteProductAsync(string id){
+            using (OracleCommand command = new OracleCommand("stockVentas_eliminar", _connection)){
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.Add("codigo", OracleDbType.Varchar2).Value = id;
+                await _connection.OpenAsync();
+                command.ExecuteNonQuery();
+                await _connection.CloseAsync();
+            }
+        }
+
+        public async Task<bool> ExistProductAsync(string code)
+        {
+            bool productStockFinded = false;
+            using (OracleCommand command = new OracleCommand("stockVentas_buscar", _connection)){
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.Add("codigo", OracleDbType.Varchar2).Value = code;
+                command.Parameters.Add("stockVenta", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
+
+
+                await _connection.OpenAsync();
+                using (OracleDataReader reader = command.ExecuteReader())
+                {
+                    if(reader.HasRows){
+                        productStockFinded = true;
+                    }
+                }
+                await _connection.CloseAsync();
+
+                return productStockFinded;
+            }
+        }
+
+        public async Task<SalesStock> GetProductByCodeAsync(string code)
+        {
+                        SalesStock? productStockFinded = null;
+            using (OracleCommand command = new OracleCommand("stockVentas_buscar", _connection)){
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.Add("codigo", OracleDbType.Varchar2).Value = code;
+                command.Parameters.Add("stockVenta", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
+
+
+                await _connection.OpenAsync();
+                using (OracleDataReader reader = command.ExecuteReader())
+                {
+                    if(reader.HasRows){
+                        reader.Read();
+                        productStockFinded = new SalesStock{
+                            Idvendedor = reader.GetInt32("idUsuario"),
+                            Code = reader.GetString("codigoproducto"),
+                            Name = reader.GetString("nombreproducto"),
+                            Quantity = reader.GetInt32("cantidadproducto"),
+                            Price = reader.GetDouble("precioproducto")
+                        };
+                    }
+                }
+                await _connection.CloseAsync();
+
+                return productStockFinded;
             }
         }
     }
