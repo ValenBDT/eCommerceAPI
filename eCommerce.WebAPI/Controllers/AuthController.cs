@@ -25,7 +25,7 @@ namespace eCommerce.WebAPI.Controllers
         public async Task<IActionResult> Register(userToRegisterDTO userToRegisterDTO){
             try{
                 var user = await _authService.Register(userToRegisterDTO);
-                if(user is null) return BadRequest("Ya existe un usuario registrado con ese correo");
+                if(user is null) return BadRequest("Error en el ingreso de datos");
                 return Ok(user);    
             }
             catch (System.Exception){

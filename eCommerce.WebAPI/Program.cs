@@ -2,6 +2,7 @@ using System.Data;
 using System.Text;
 using eCommerce.Persistence;
 using eCommerce.Persistence.Interfaces;
+using eCommerce.Persistence.Repositories;
 using eCommerce.Services;
 using eCommerce.Services.Interfaces;
 using eCommerce.Services.Services;
@@ -18,6 +19,8 @@ builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
