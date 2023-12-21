@@ -86,7 +86,7 @@ namespace eCommerce.Persistence.Repositories
 
         public async Task<SalesStock> GetProductByCodeAsync(string code)
         {
-                        SalesStock? productStockFinded = null;
+            SalesStock? productStockFinded = null;
             using (OracleCommand command = new OracleCommand("stockVentas_buscar", _connection)){
                 command.CommandType = CommandType.StoredProcedure;
 

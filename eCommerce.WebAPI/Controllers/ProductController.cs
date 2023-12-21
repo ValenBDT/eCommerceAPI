@@ -50,5 +50,17 @@ namespace eCommerce.WebAPI.Controllers
                 return StatusCode(500, "Se produjo un error en la base de datos. Inténtelo de nuevo más tarde.");
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetProduct(string code){
+            try{
+                var product = await _productService.GetProductAsync(code);
+                if(product is null) return NotFound("No existe tal producto");
+                return Ok(product);
+            }
+            catch (System.Exception){
+                return StatusCode(500, "Se produjo un error en la base de datos. Inténtelo de nuevo más tarde.");
+            }
+        }
     }
 }

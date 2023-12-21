@@ -45,6 +45,11 @@ namespace eCommerce.Services.Services
             return true;
         }
 
-
+        public async Task<ProductToListDTO> GetProductAsync(string code){
+            var product = await _productRepository.GetProductByCodeAsync(code);
+            if(product is null) return null;
+            var productToList = _mapper.Map<ProductToListDTO>(product);
+            return productToList;
+        }
     }
 }
