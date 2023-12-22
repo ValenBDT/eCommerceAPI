@@ -113,5 +113,38 @@ namespace eCommerce.Persistence.Repositories
                 return productStockFinded;
             }
         }
+
+        public async Task<SalesStock> UpdateProductAsync(SalesStock productoStock)
+        {
+            SalesStock? productStockFinded = null;
+            using (OracleCommand command = new OracleCommand("stockVentas_actualizar", _connection)){
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.Add("codigo", OracleDbType.Varchar2).Value = productoStock.Code;
+                command.Parameters.Add("nombre", OracleDbType.Varchar2).Value = productoStock.Name;
+                command.Parameters.Add("cantidad", OracleDbType.Varchar2).Value = productoStock.Quantity;
+                command.Parameters.Add("precio", OracleDbType.Varchar2).Value = productoStock.Price;
+                command.Parameters.Add("stockVenta", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
+
+
+                await _connection.OpenAsync();
+                using (OracleDataReader reader = command.ExecuteReader())
+                {
+                    if(reader.HasRows){
+                        reader.Read();
+                        productStockFinded = new SalesStock{
+                            Idvendedor = reader.GetInt32("idUsuario"),
+                            Code = reader.GetString("codigoproducto"),
+                            Name = reader.GetString("nombreproducto"),
+                            Quantity = reader.GetInt32("cantidadproducto"),
+                            Price = reader.GetDouble("precioproducto")
+                        };
+                    }
+                }
+                await _connection.CloseAsync();
+
+                return productStockFinded;
+            }
+        }
     }
 }

@@ -55,8 +55,26 @@ namespace eCommerce.WebAPI.Controllers
         public async Task<IActionResult> GetProduct(string code){
             try{
                 var product = await _productService.GetProductAsync(code);
-                if(product is null) return NotFound("No existe tal producto");
+                if(product is null) return NotFound("No existe tal producto o no tiene stock");
                 return Ok(product);
+            }
+            catch (System.Exception){
+                return StatusCode(500, "Se produjo un error en la base de datos. Inténtelo de nuevo más tarde.");
+            }
+        }
+        [Authorize(Policy = "Vendedor")]
+        [HttpPut]
+        public async Task<IActionResult> UpdateProduct(ProductToUpdateDTO productToUpdateDTO){
+
+            try{
+            var idvendedorClaim = User.FindFirst("Id");
+            if(idvendedorClaim is null) return Unauthorized();
+
+            var idVendedor = int.Parse(idvendedorClaim.Value);
+
+            var productUpdated = await _productService.UpdateProductAsync(productToUpdateDTO, idVendedor);
+            if(productUpdated is null) return BadRequest();
+            return Ok(productUpdated);
             }
             catch (System.Exception){
                 return StatusCode(500, "Se produjo un error en la base de datos. Inténtelo de nuevo más tarde.");

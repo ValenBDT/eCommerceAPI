@@ -51,5 +51,25 @@ namespace eCommerce.Services.Services
             var productToList = _mapper.Map<ProductToListDTO>(product);
             return productToList;
         }
+
+        public async Task<ProductToListDTO> UpdateProductAsync(ProductToUpdateDTO productToUpdateDTO, int Idvendedor)
+        {
+            var productToUpdate = await _productRepository.GetProductByCodeAsync(productToUpdateDTO.Code);
+            if(productToUpdate is null) return null;
+
+            if(productToUpdate.Idvendedor != Idvendedor) return null;
+
+            productToUpdate.Price = productToUpdateDTO.Price;
+            productToUpdate.Quantity = productToUpdateDTO.Quantity;
+            productToUpdate.Name = productToUpdateDTO.Name;
+
+            var productUpdated = await _productRepository.UpdateProductAsync(productToUpdate);
+
+            if(productUpdated is null) return null;
+
+            var productUpdatedList = _mapper.Map<ProductToListDTO>(productUpdated); 
+
+            return productUpdatedList;
+        }
     }
 }

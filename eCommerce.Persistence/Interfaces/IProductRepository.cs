@@ -12,5 +12,6 @@ namespace eCommerce.Persistence.Interfaces
         Task DeleteProductAsync(string code );
         Task<bool> ExistProductAsync(string code);
         Task<SalesStock> GetProductByCodeAsync(string code);
+        Task<SalesStock> UpdateProductAsync(SalesStock productoStock);
     }
 }
