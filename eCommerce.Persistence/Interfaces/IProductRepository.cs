@@ -13,5 +13,7 @@ namespace eCommerce.Persistence.Interfaces
         Task<bool> ExistProductAsync(string code);
         Task<SalesStock> GetProductByCodeAsync(string code);
         Task<SalesStock> UpdateProductAsync(SalesStock productoStock);
+        Task<IEnumerable<SalesStock>> GetAllProductsAsync();
+        Task<IEnumerable<SalesStock>> GetAllProductsBySellerAsync(int id);
     }
 }

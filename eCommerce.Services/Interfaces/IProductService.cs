@@ -12,5 +12,7 @@ namespace eCommerce.Services.Interfaces
         Task<bool> DeleteProductAsync(string code);
         Task<ProductToListDTO> GetProductAsync(string code);
         Task<ProductToListDTO> UpdateProductAsync(ProductToUpdateDTO productToUpdateDTO, int Idvendedor);
+        Task<IEnumerable<ProductToListDTO>> GetAllProductsAsync();
+        Task<IEnumerable<ProductToListDTO>> GetAllProductsBySellerAsync(int id);
     }
 }

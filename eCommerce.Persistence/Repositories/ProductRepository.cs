@@ -84,6 +84,80 @@ namespace eCommerce.Persistence.Repositories
             }
         }
 
+        public async Task<IEnumerable<SalesStock>> GetAllProductsAsync()
+        {
+            List<SalesStock> Sales = new List<SalesStock>();
+            using (var connection = _connection)
+            {
+                using (var command = connection.CreateCommand())
+                {
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "stockventas_listar";
+                OracleParameter refCursorParam = new OracleParameter("stockVentas", OracleDbType.RefCursor);
+                refCursorParam.Direction = System.Data.ParameterDirection.Output;
+                command.Parameters.Add(refCursorParam);
+                await connection.OpenAsync();
+
+                using (OracleDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        SalesStock newSale = new SalesStock
+                        {
+                            Idvendedor = reader.GetInt32("idUsuario"),
+                            Code = reader.GetString("codigoproducto"),
+                            Name = reader.GetString("nombreproducto"),
+                            Quantity = reader.GetInt32("cantidadproducto"),
+                            Price = reader.GetInt32("precioproducto")
+                    };
+                    Sales.Add(newSale);
+                    }
+                }
+
+                await connection.CloseAsync();
+                }
+            }
+                return Sales;
+
+        }
+
+        public async Task<IEnumerable<SalesStock>> GetAllProductsBySellerAsync(int id)
+        {
+            List<SalesStock> Sales = new List<SalesStock>();
+            using (var connection = _connection)
+            {
+                using (var command = connection.CreateCommand())
+                {
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "stockventas_listar_vendedor";
+                command.Parameters.Add("idvendedor", OracleDbType.Int32).Value = id;
+                OracleParameter refCursorParam = new OracleParameter("stockVentas", OracleDbType.RefCursor);
+                refCursorParam.Direction = System.Data.ParameterDirection.Output;
+                command.Parameters.Add(refCursorParam);
+                await connection.OpenAsync();
+
+                using (OracleDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        SalesStock newSale = new SalesStock
+                        {
+                            Idvendedor = reader.GetInt32("idUsuario"),
+                            Code = reader.GetString("codigoproducto"),
+                            Name = reader.GetString("nombreproducto"),
+                            Quantity = reader.GetInt32("cantidadproducto"),
+                            Price = reader.GetInt32("precioproducto")
+                    };
+                    Sales.Add(newSale);
+                    }
+                }
+
+                await connection.CloseAsync();
+                }
+            }
+                return Sales;
+        }
+
         public async Task<SalesStock> GetProductByCodeAsync(string code)
         {
             SalesStock? productStockFinded = null;

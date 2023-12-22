@@ -14,9 +14,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddTransient<OracleConnection>(_ => new Oracle.ManagedDataAccess.Client.OracleConnection(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddTransient<IUserRepository, UserRepository>();
+
+
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
-builder.Services.AddScoped<IUserService, UserService>();
+
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
