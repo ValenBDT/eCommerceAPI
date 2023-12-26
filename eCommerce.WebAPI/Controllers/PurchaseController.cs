@@ -24,20 +24,38 @@ namespace eCommerce.WebAPI.Controllers
 
         [HttpPost("CreatePurchase")]
         public async Task<IActionResult> CreatePurchase(PurchaseToCreateDTO purchaseToCreateDTO){
-            var purchase = await _purchaseService.CreatePurchase(purchaseToCreateDTO);
+            try
+            {
+                    var purchase = await _purchaseService.CreatePurchase(purchaseToCreateDTO);
 
-            if(purchase is null) return BadRequest();
+                    if(purchase is null) return BadRequest();
 
-            return Ok(purchase);
+                    return Ok(purchase);
+            }
+            catch (System.Exception)
+            {
+
+                return StatusCode(500, "Se produjo un error en la base de datos. Inténtelo de nuevo más tarde.");
+            }
+
         }
 
         [HttpGet("GetPurchaseResume/{id}")]
         public async Task<IActionResult> GetPurchaseResume(int purchaseId){
-            var purchaseResume = await _purchaseService.GetPurchaseResume(purchaseId);
 
-            if(purchaseResume is null) return NotFound();
+            try
+            {
+                var purchaseResume = await _purchaseService.GetPurchaseResume(purchaseId);
 
-            return Ok(purchaseResume);
+                if(purchaseResume is null) return NotFound();
+
+                return Ok(purchaseResume);               
+            }
+            catch (System.Exception)
+            {
+                
+                return StatusCode(500, "Se produjo un error en la base de datos. Inténtelo de nuevo más tarde.");
+            }
         }
     }
 }
