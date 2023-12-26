@@ -1,5 +1,6 @@
 using System.Data;
 using System.Text;
+using eCommerce.Entities;
 using eCommerce.Persistence;
 using eCommerce.Persistence.Interfaces;
 using eCommerce.Persistence.Repositories;
@@ -15,13 +16,16 @@ builder.Services.AddControllers();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddTransient<OracleConnection>(_ => new Oracle.ManagedDataAccess.Client.OracleConnection(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// builder.Services.AddScoped<IPurchaseRepository, PurchaseRepository>();
+// builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+// builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
-builder.Services.AddScoped<IAuthRepository, AuthRepository>();
-
+builder.Services.AddScoped<IPurchaseService, PurchaseService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
+
+builder.Services.AddRepositories();
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

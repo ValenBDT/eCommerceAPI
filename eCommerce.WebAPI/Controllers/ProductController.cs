@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace eCommerce.WebAPI.Controllers
 {   
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("")]
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
@@ -20,7 +20,7 @@ namespace eCommerce.WebAPI.Controllers
             _productService = productService;
         }
         [Authorize(Policy = "Vendedor")]
-        [HttpPost]
+        [HttpPost("CreateProduct")]
         public async Task<IActionResult> CreateProduct(ProductToCreateDTO productToCreateDTO){
             try{
                 var idvendedorClaim = User.FindFirst("Id");
@@ -38,7 +38,7 @@ namespace eCommerce.WebAPI.Controllers
             }
         }
         [Authorize(Policy = "Vendedor")]
-        [HttpDelete]
+        [HttpDelete("DeleteProduct/{code}")]
         public async Task<IActionResult> DeleteProduct(string code){
             try{
                 if(!await _productService.DeleteProductAsync(code)) return BadRequest();
@@ -51,7 +51,7 @@ namespace eCommerce.WebAPI.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("GetProduct/{code}")]
         public async Task<IActionResult> GetProduct(string code){
             try{
                 var product = await _productService.GetProductAsync(code);
@@ -63,7 +63,7 @@ namespace eCommerce.WebAPI.Controllers
             }
         }
         [Authorize(Policy = "Vendedor")]
-        [HttpPut]
+        [HttpPut("UpdateProduct")]
         public async Task<IActionResult> UpdateProduct(ProductToUpdateDTO productToUpdateDTO){
 
             try{
@@ -81,12 +81,12 @@ namespace eCommerce.WebAPI.Controllers
             }
         }
         [Authorize(Policy = "Comprador")]
-        [HttpGet("products")]
+        [HttpGet("GetAllProducts")]
         public async Task<IActionResult> GetAllProducts(){
             return Ok(await _productService.GetAllProductsAsync());
         }
 
-        [HttpGet("vendedor")]
+        [HttpGet("GetAllProductsBySeller/{id}")]
         public async Task<IActionResult> GetAllProductsBySeller(int id){
             var products = await _productService.GetAllProductsBySellerAsync(id);
             if(products is null) return BadRequest();

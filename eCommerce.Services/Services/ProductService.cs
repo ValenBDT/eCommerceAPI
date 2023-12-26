@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using eCommerce.DTOs.Product;
+using eCommerce.DTOs.Purchase;
 using eCommerce.Entities;
 using eCommerce.Persistence.Interfaces;
 using eCommerce.Services.Interfaces;
@@ -73,7 +74,7 @@ namespace eCommerce.Services.Services
         public async Task<ProductToListDTO> GetProductAsync(string code){
             var product = await _productRepository.GetProductByCodeAsync(code);
             if(product is null) return null;
-            if(product.Quantity < 0) return null;
+            if(product.Quantity <= 0) return null;
             var productToList = _mapper.Map<ProductToListDTO>(product);
             return productToList;
         }
