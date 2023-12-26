@@ -82,3 +82,9 @@ Casos que se testearon en postman(no todos, solo los mas importantes):
 
 
 (Ejecutar en postman primero Auth > Productos > Compras)
+
+AUTH = https://elements.getpostman.com/redirect?entityId=32006551-3b239a12-61bb-40bf-9f69-f8247ecf2006&entityType=collection
+
+PRODUCTOS = 
+
+COMPRAS = 
