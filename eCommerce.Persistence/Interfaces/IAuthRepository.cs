@@ -11,5 +11,7 @@ namespace eCommerce.Persistence.Interfaces
         Task<User> Register(User user);
         Task<User> Login(string email, string password);
         Task<User> GetUserByMail(string email);
+
+        Task<User> GetUserById(int id);
     }
 }

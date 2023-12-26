@@ -96,5 +96,34 @@ namespace eCommerce.Persistence
                 return Convert.ToBase64String(passwordHash);
             }
         }
+
+        public async Task<User> GetUserById(int id)
+        {
+            User? userFinded = null;
+            using (OracleCommand command = new OracleCommand("usuario_buscar_id", _connection))
+            {
+                await _connection.OpenAsync();
+                command.Parameters.Add("p_idusuario", OracleDbType.Varchar2).Value = id;
+                command.Parameters.Add("p_usuario", OracleDbType.RefCursor).Direction = ParameterDirection.Output;
+                command.CommandType = CommandType.StoredProcedure;
+
+                using (OracleDataReader reader = command.ExecuteReader())
+                {
+                    if(reader.HasRows){
+                        reader.Read();
+                        userFinded = new User{
+                            UserId = reader.GetInt32("idUsuario"),
+                            Mail = reader.GetString("mail"),
+                            Name = reader.GetString("nombre"),
+                            Rol = reader.GetString("rol"),
+                            Password = reader.GetString("contraseña")  
+                        };
+                    }
+                }
+
+            }
+                await _connection.CloseAsync();
+                return userFinded;
+        }
     }
 }

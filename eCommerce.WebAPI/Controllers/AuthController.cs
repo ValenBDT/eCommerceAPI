@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace eCommerce.WebAPI.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("")]
     public class AuthController : ControllerBase
     {
 
@@ -21,7 +21,7 @@ namespace eCommerce.WebAPI.Controllers
 
         }
 
-        [HttpPost("register")]
+        [HttpPost("Register")]
         public async Task<IActionResult> Register(userToRegisterDTO userToRegisterDTO){
             try{
                 var user = await _authService.Register(userToRegisterDTO);
@@ -33,7 +33,7 @@ namespace eCommerce.WebAPI.Controllers
             }
         }
 
-        [HttpPost("login")]
+        [HttpPost("Login")]
         public async Task<IActionResult> Login(userToLoginDTO userToLoginDTO){
             try{
                 var userToLogin = await _authService.Login(userToLoginDTO);

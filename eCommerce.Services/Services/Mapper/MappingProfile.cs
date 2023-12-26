@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using eCommerce.DTOs.Product;
+using eCommerce.DTOs.Purchase;
+using eCommerce.DTOs.PurchaseResume;
 using eCommerce.DTOs.User;
 using eCommerce.Entities;
 
@@ -21,6 +23,12 @@ namespace eCommerce.Services.Services.Mapper
             CreateMap<ProductToCreateDTO, SalesStock>();
             //CreateMap<productToUpdateDTO, SalesStock>();
             CreateMap<SalesStock, ProductToListDTO>();
+
+
+            CreateMap<PurchaseToCreateDTO, Purchase>();
+            CreateMap<Purchase, PurchaseToListDTO>();
+
+            CreateMap<PurchaseResume, PurchaseResumeListDTO>();
         }
     }
 }
