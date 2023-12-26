@@ -32,20 +32,20 @@ namespace eCommerce.WebAPI.Controllers
 
                     return Ok(purchase);
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
 
-                return StatusCode(500, "Se produjo un error en la base de datos. Inténtelo de nuevo más tarde.");
+                return StatusCode(500, ex.Message);
             }
 
         }
 
         [HttpGet("GetPurchaseResume/{id}")]
-        public async Task<IActionResult> GetPurchaseResume(int purchaseId){
+        public async Task<IActionResult> GetPurchaseResume(int id){
 
             try
             {
-                var purchaseResume = await _purchaseService.GetPurchaseResume(purchaseId);
+                var purchaseResume = await _purchaseService.GetPurchaseResume(id);
 
                 if(purchaseResume is null) return NotFound();
 

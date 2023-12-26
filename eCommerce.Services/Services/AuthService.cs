@@ -35,7 +35,7 @@ namespace eCommerce.Services.Services
 
         public async Task<userToListRegisterDTO> Register(userToRegisterDTO userToRegisterDTO)
         {
-            if(userToRegisterDTO.Rol != "Comprador" || userToRegisterDTO.Rol == "Vendedor") return null;
+            if(userToRegisterDTO.Rol != "Comprador" && userToRegisterDTO.Rol != "Vendedor") return null;
             if(await _authRepository.GetUserByMail(userToRegisterDTO.Mail) != null) return null;
 
             var userToRegister = _mapper.Map<User>(userToRegisterDTO);
