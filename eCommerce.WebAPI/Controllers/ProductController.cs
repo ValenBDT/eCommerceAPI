@@ -50,7 +50,7 @@ namespace eCommerce.WebAPI.Controllers
                 return StatusCode(500, "Se produjo un error en la base de datos. Inténtelo de nuevo más tarde.");
             }
         }
-
+        [Authorize]
         [HttpGet("GetProduct/{code}")]
         public async Task<IActionResult> GetProduct(string code){
             try{
@@ -92,7 +92,7 @@ namespace eCommerce.WebAPI.Controllers
                 return StatusCode(500, "Se produjo un error en la base de datos. Inténtelo de nuevo más tarde.");
             }
         }
-
+        [Authorize]
         [HttpGet("GetAllProductsBySeller/{id}")]
         public async Task<IActionResult> GetAllProductsBySeller(int id){
             try
