@@ -17,6 +17,7 @@
 /CreatePurchase: Sin problema
 
 /GetPurchaseResume: Tome por defecto que se tenia que ingresar un id de la compra y daba el resumen de la misma, otorgando los datos pedidos y algunos extra.
+(Por ende, deje que la tabla tuviera su propio id autogenerado)
 (Este es el endpoint donde tuve mas dudas si lo interprete bien)
 
 Consideraciones:
@@ -82,9 +83,7 @@ Casos que se testearon en postman(no todos, solo los mas importantes):
 
 
 (Ejecutar en postman primero Auth > Productos > Compras)
+(Los tokens duran 1 hora, por lo que los tokens que estan en postman no sirven, generar nuevos)
+(Puede ser que haya problemas con los ids de los usuarios, actualizar en caso de necesitarlo)(Por ejemplo, cambiar el id con el que se genero el comprador para usarlo en el alta de una compra)
 
-AUTH = https://elements.getpostman.com/redirect?entityId=32006551-3b239a12-61bb-40bf-9f69-f8247ecf2006&entityType=collection
-
-PRODUCTOS = 
-
-COMPRAS = 
+Collection = https://www.postman.com/material-saganist-53408245/workspace/ecommercetests
